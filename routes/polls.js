@@ -1,14 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
-/*
- * GET default poll
+/* Count vote
+ * 
  */
-router.get('/poll', function(req, res){
-    //TODO specify one poll or all polls
-    /*var db = req.db;
+router.get('/vote', function(req, res){
+    //req.connection.remoteAddress
+    //find poll based on value
+    //add vote
+    //return results
+    
+    var db = req.db;
     var collection = db.get('voterpoll');
     collection.find({},{},function(e,docs){
         res.json(docs);
-    });*/
+    });
+
 });
