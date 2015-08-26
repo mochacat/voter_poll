@@ -1,7 +1,5 @@
 // DOM Ready
 $(document).ready(function() {
-    //populate default poll
-    populatePoll();
     //pull up percentages for poll
     $('#current-poll').click(
       resultsPoll();
