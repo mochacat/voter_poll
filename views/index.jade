@@ -2,9 +2,8 @@ extends layout
 
 block content
   p Poll created by #{poll_user}
-  .poll
-    form#poll(name="votepoll",method="post",action="polls/vote")
-      each answer in answers
-        input(name="poll", type="radio", value="#{answer.answer}")
-        |#{answer.answer}
-      button#pollVote(type="submit") Submit
+  .poll(name="votepoll", id="#{poll_id}")
+    each answer in answers
+      input(name="poll", type="radio", value="#{answer.answer}")
+      |#{answer.answer}
+    button#pollVote(type="submit") Submit
