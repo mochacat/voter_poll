@@ -9,48 +9,53 @@ $(document).ready(function() {
     }
 
     $.ajax({
-        type : 'POST',
-        data : JSON.stringify(pollVote),
-        contentType: 'application/json; charset=utf-8',
-        dataType : 'json',
-        url : 'polls/vote'   
+      type : 'POST',
+      data : JSON.stringify(pollVote),
+      contentType: 'application/json; charset=utf-8',
+      dataType : 'json',
+      url : 'polls/vote'   
     }).done(function(response){
-        console.log(response);
-        //populatePoll();
+      //populatePoll();
     }).fail(function(){
-        //TODO switch message
-        alert('Sorry, we couldn\'t submit your vote at this time.');
+      //TODO switch message
+      alert('Sorry, we couldn\'t submit your vote at this time.');
     });
     
+  });
+
+  $('#createPoll').click(function(){
     //create new poll
-    $('#new-poll').click(function(){
-      createPoll();
-    });
-    //delete poll
-    $('#delete-poll').click(function(){
-      deletePoll();
+    var newPoll = {
+      "answer1" : $('input[name=answer1]').val(), 
+      "answer2" : $('input[name=answer2]').val()
+    } 
+
+    $.ajax({
+      type : 'POST',
+      data : JSON.stringify(newPoll),
+      contentType: 'application/json; charset=utf-8',
+      //dataType : 'json',
+      url : 'polls/create' 
+    }).done(function(res){
+      //validation errors
+      if (res.error){
+        if ($('#errors').length){
+          $('#errors').empty();
+        }
+        for (var i = 0; i < res.errors.length; i++){
+          $('#errors').append('<p>' + res.errors[i].msg + '</p>');
+        }
+      }
+      //TODO add message about poll created
+    }).fail(function(){
+      alert('Sorry, we couldn\'t create your poll.');
     });
   });
 
-  //FUNCTIONS
-  function resultsPoll() {
-    var pollContent = '';
-    //AJAX call for JSON from db
-    $.getJSON('polls/poll', function(data){
-      //questions
-      ////options
-      //add to html
-    }).done(function(data){
-      //add next poll at random
-      //getNextPoll();
-    }).fail(function(){
-      //TODO add sorry message
-    });
-  }
-
-  function createPoll(){
-  }
-
+  //delete poll
+  $('#delete-poll').click(function(){
+    deletePoll();
+  });
   function deletePoll(){
   }
 
