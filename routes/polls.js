@@ -11,13 +11,13 @@ router.post('/vote', function(req, res, next){
   var polls = db.get('pollcollection');
 
   //Allow one vote per ip
+  var voted = true;
   votes.find({ "ip" : req.ip, "poll_id" : req.body.poll_id }, {}, function (e,result) {
     
-    //return already voted message
-    if (result.length  != 0){
-      res.status(404);
-    } else {
-      
+    if (result.length  == 0){
+      //never voted before
+      voted = false;
+
       //tally vote for the poll
       polls.update(
         { "_id" : ObjectId(req.body.poll_id) , "answers.answer" : req.body.vote},
@@ -26,26 +26,26 @@ router.post('/vote', function(req, res, next){
       );
 
       //create vote for ip
-      if (db.getLastErrorObj().n > 0){
-        votes.insert({
-          "date" : new Date(),
-          "poll_id" : req.body.poll_id,
-          "answer" : req.body.vote,
-          "ip" : req.ip
-        });
-        
-        //send back poll stats
-        polls.findOne({"poll_id" : req.body.poll_id}, {}, function(err, docs){
-          if (err !== null){
-            next(err);
-          } else {
-            res.send(docs);
-          }
-        });  
+      votes.insert({
+        "date" : new Date(),
+        "poll_id" : req.body.poll_id,
+        "answer" : req.body.vote,
+        "ip" : req.ip
+      });
+      
+    }
+    //send back poll stats
+    polls.find({ "_id" : ObjectId(req.body.poll_id) }, {}, function(err, docs){
+      if (err !== null){
+        next(err);
       } else {
-        res.status(404);
-      } 
-    } 
+        var params = {
+          voted: voted,
+          data : docs
+        };
+        res.send(params);
+      }
+    });
   });
 
 });
