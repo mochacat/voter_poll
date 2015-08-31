@@ -9,3 +9,4 @@ node_modules
 
 #mongo
 data/
+credentials.js

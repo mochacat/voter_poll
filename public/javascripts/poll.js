@@ -52,16 +52,13 @@ $(document).ready(function() {
     });
   });
 
-  //delete poll
-  $('#delete-poll').click(function(){
-    deletePoll();
-  });
-  function deletePoll(){
-  }
-
-  function getNextPoll(){
-    //TODO: randomize
-    //TODO: no poll next
-  }
+  $('#next-poll').click(
+    $.ajax('polls/getPoll', function(data){
+        type : 'POST', 
+        data : JSON.stringify({ id : $('div[name=votepoll]').attr('id')}),
+        contentType : 'application/json; charset=utf-8',
+        url : 'polls/getPoll'
+    });
+  );  
 });
 

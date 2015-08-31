@@ -4,12 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
 
 //Database
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/voterpoll');
-
+var credentials = require('./credentials');
+var db = monk(credentials.uri);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressValidator());
 
 app.enable('trust proxy');
 

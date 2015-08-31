@@ -7,3 +7,9 @@ block content
       input(name="poll", type="radio", value="#{answer.answer}")
       |#{answer.answer}
     button#pollVote(type="submit") Submit
+  .create-poll
+    input(type="text", name="answer1")
+    input(type="text", name="answer2")
+    button#createPoll(type="submit") Create Poll
+  #errors
+    

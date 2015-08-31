@@ -32,7 +32,6 @@ router.post('/vote', function(req, res, next){
         'answer' : req.body.vote,
         'ip' : req.ip
       });
-      
     }
     //send back poll stats
     polls.find({ '_id' : ObjectId(req.body.poll_id) }, {}, function(err, docs){
@@ -57,7 +56,6 @@ router.post('/create', function(req, res, next){
   var db = req.db;
   var polls = db.get('pollcollection');
 
-  console.log(req.body);
   var answer1 = req.body.answer1;
   var answer2 = req.body.answer2;
 
@@ -89,10 +87,29 @@ router.post('/create', function(req, res, next){
   }
 });
 
-/* Pull up next poll (random)
+/* Pull up next poll (sort by creation date)
  *
  */
-router.post('/poll', function(req, res, next){
+router.post('/getPoll', function(req, res, next){
+  var params = {};
+  params.title = 'Would you rather?';
+
+  var db = req.db;
+  var polls = db.get('pollcollection');
+  collection.findOne(
+    { _id : { $not : { ObjectId(req.id) } } },
+    { sort : { creationDate : 1 } }, //sort by oldest
+    function(err,poll){
+      if (err !== null){
+        next(err);
+      } else {
+        params.poll_id = poll._id;
+        polls.answers = poll.answers;
+        params.poll_user = poll.createdBy;
+
+        res.render('index', params);
+  });
 
 });
+
 module.exports = router;
