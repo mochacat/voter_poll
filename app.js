@@ -9,8 +9,14 @@ var expressValidator = require('express-validator');
 //Database
 var mongo = require('mongodb');
 var monk = require('monk');
-var credentials = require('./credentials');
-var db = monk(credentials.uri);
+
+//TODO differentiate between production and dev environment
+if (typeof process.env.MONGOLAB_URI == undefined){
+  var credentials = require('./credentials');
+  var db = credentials.uri;
+} else {
+  var db = monk(process.env.MONGOLAB_URI);  
+}
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
