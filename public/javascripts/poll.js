@@ -149,10 +149,10 @@ $(document).ready(function() {
       legend: 'none'
     };
 
-    var chart_data = '<div id="donut_single" style="height:550px; width:550px"></div>';
-
+    var chart_data = '<div class="animated fadeInDown" id="donut_single" style="height:550px; width:550px"></div>';
+    
     //insert chart
-    $('.poll').prepend(chart_data);
+    $('.poll').before(chart_data);
 
     var chart = new google.visualization.PieChart(document.getElementById('donut_single'));
     chart.draw(data, options);
