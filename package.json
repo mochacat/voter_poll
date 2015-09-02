@@ -15,6 +15,6 @@
     "serve-favicon": "~2.3.0",
     "mongodb": "~2.0",
     "monk": "~1.0.1",
-    "express-validator" : "~0.3"
+    "express-validator" : "~0.5.0"
   }
 }

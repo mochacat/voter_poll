@@ -11,9 +11,9 @@ var mongo = require('mongodb');
 var monk = require('monk');
 
 //TODO differentiate between production and dev environment
-if (typeof process.env.MONGOLAB_URI == undefined){
+if (typeof(process.env.MONGOLAB_URI) == "undefined"){
   var credentials = require('./credentials');
-  var db = credentials.uri;
+  var db = monk(credentials.uri);
 } else {
   var db = monk(process.env.MONGOLAB_URI);  
 }
