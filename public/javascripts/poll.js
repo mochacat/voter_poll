@@ -55,6 +55,8 @@ $(document).ready(function() {
         for (var i = 0; i < res.errors.length; i++){
           $('#errors').append('<p>' + res.errors[i].msg + '</p>');
         }
+      } else {
+        $('#create').modal('hide');
       }
       //TODO add message about poll created
     }).fail(function(){
