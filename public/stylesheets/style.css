@@ -1,35 +1,71 @@
 body {
   background: #f1f0ef;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
 }
 
 footer{
   width: 30%;
-  padding-top: 100px;
+  padding-top: 10px;
   margin: auto;
   opacity: 0.9;
   text-align: center;
 }
 
-#header{
-  color: white;
-  font-size: large;
-  background: #2A8E86;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  overflow: hidden;
-  text-align: center;
+.poll{
+  max-width: 500px;
+  padding-top: 15px;
+  margin: 0 auto;
 }
 
-.container{
-  max-width: 800px;
-  margin: auto;
-  text-align: center;
+.answers{
+  padding-top: 20px;
 }
 
+.answer{
+ margin-left:2px:
+}
+
+.create-poll{
+  display: none;
+}
+
+.list-group-item:hover{
+  background-color: rgba(226, 255, 231, 0.86);
+}
+
+#overlay{
+
+}
+
+#nextPoll {
+  float: right;
+}
+
+#polo {
+  font-family:garamond;
+  font-stretch:ultra-condensed;
+  text-align:center;
+  font-size:60px;
+  margin-top:20px;
+  padding-bottom:0px;
+  z-index: 30;
+}
+
+#voteCount {
+  font-size:40px;
+  position:absolute;
+  font-family: sans-serif;
+  margin-left:43%;
+  margin-right:57%;
+}
+
+#donut_single {
+  position: static;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: -10;
+}
+
+input[type="radio"]{
+  visibility:hidden;
+}

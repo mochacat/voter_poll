@@ -1,15 +1,20 @@
 extends layout
 
 block content
-  p Poll created by #{poll_user}
-  .poll(name="votepoll", id="#{poll_id}")
-    each answer in answers
-      input(name="poll", type="radio", value="#{answer.answer}")
-      |#{answer.answer}
-    button#pollVote(type="submit") Submit
-  .create-poll
-    input(type="text", name="answer1")
-    input(type="text", name="answer2")
-    button#createPoll(type="submit") Create Poll
-  #errors
+  .poll
+    h1 Would you rather ____  ?
+    div.answers(name="votepoll", id="#{poll_id}")
+      ul.list-group
+        each answer in answers
+          li.list-group-item
+            input.answer(name="poll", type="radio", value="#{answer.answer}")
+            |#{answer.answer}
+      p 
+        button#pollVote.btn.btn-lg.btn-success.btn-block(type="submit") Submit
+        button#nextPoll.btn.btn-lg.btn-success.btn-block(type="submit") Next
+    .create-poll
+      button#nextPoll.btn.btn-lg.btn-success(type="submit") Create Poll
+        input(type="text", name="answer1")
+        input(type="text", name="answer2")
+    #errors
     

@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-//var params = {};
-
 /* GET poll page. */
 router.get('/', function(req, res, next) {
   var params = {};

@@ -9,7 +9,7 @@ router.post('/vote', function(req, res, next){
   var db = req.db;
   var votes = db.get('votecollection');
   var polls = db.get('pollcollection');
-
+  
   //Allow one vote per ip
   var voted = true;
   votes.find({ 'ip' : req.ip, 'poll_id' : req.body.poll_id }, {}, function (e,result) {
@@ -92,23 +92,24 @@ router.post('/create', function(req, res, next){
  */
 router.post('/getPoll', function(req, res, next){
   var params = {};
-  params.title = 'Would you rather?';
 
   var db = req.db;
   var polls = db.get('pollcollection');
-  collection.findOne(
-    { _id : { $not : { ObjectId(req.id) } } },
+  polls.findOne(
+    { _id : { $ne : ObjectId(req.body.id) } },
     { sort : { creationDate : 1 } }, //sort by oldest
     function(err,poll){
       if (err !== null){
         next(err);
       } else {
         params.poll_id = poll._id;
-        polls.answers = poll.answers;
+        params.answers = poll.answers;
         params.poll_user = poll.createdBy;
 
-        res.render('index', params);
-  });
+        res.send(params);
+      }
+    }
+  );
 
 });
 
