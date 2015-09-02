@@ -15,10 +15,11 @@ footer{
   max-width: 500px;
   padding-top: 15px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .answers{
-  padding-top: 20px;
+  padding-top: 25px;
 }
 
 .answer{
@@ -57,9 +58,11 @@ footer{
 
 #donut_single {
   position: static;
+  margin-top : 10px;
   margin-left: auto;
   margin-right: auto;
   z-index: -10;
+  outline: 1px solid #B1ADAD;
 }
 
 #create{
@@ -68,4 +71,38 @@ footer{
 
 input[type="radio"]{
   visibility:hidden;
+}
+
+.animated {
+  -webkit-animation-duration: 1s; 
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown { 
+  0% {
+    opacity:0;
+    -webkit-transform: translateY(-20px); 
+  }
+  100% {
+    opacity:1;
+    -webkit-transform: translateY(0); 
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0; 
+    transform: translateY(-20px); 
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); 
+  }
+}
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown; 
+  animation-name: fadeInDown; 
 }
