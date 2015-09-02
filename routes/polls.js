@@ -60,12 +60,9 @@ router.post('/create', function(req, res, next){
   var answer2 = req.body.answer2;
 
   //Form validation
-  var emptyMsg = 'Both options required';
   var charMsg = '10 to 140 characters required';
 
-  req.checkBody('answer1', emptyMsg).notEmpty();
   req.checkBody('answer1', charMsg).len(10,140);
-  req.checkBody('answer2', emptyMsg).notEmpty();
   req.checkBody('answer2', charMsg).len(10,140);
   
   var errors = req.validationErrors();
@@ -95,22 +92,39 @@ router.post('/getPoll', function(req, res, next){
 
   var db = req.db;
   var polls = db.get('pollcollection');
-  polls.findOne(
-    { _id : { $ne : ObjectId(req.body.id) } },
-    { sort : { creationDate : 1 } }, //sort by oldest
-    function(err,poll){
-      if (err !== null){
-        next(err);
-      } else {
-        params.poll_id = poll._id;
-        params.answers = poll.answers;
-        params.poll_user = poll.createdBy;
 
-        res.send(params);
-      }
+  polls.findOne({ _id : ObjectId(req.body.id) },{},function(err,old_poll){
+    if (err !== null){
+    } else {
+      polls.findOne({
+          _id : { $ne : ObjectId(req.body.id) },
+          creationDate : { $gt : new Date(old_poll.creationDate) } 
+        }, 
+        { 
+          sort : { creationDate : 1 } 
+        },
+        function(err,poll){
+          console.log(poll);
+          if (err !== null){
+            next(err);
+          } else {
+            if (poll){  
+              params.poll_id = poll._id;
+              params.answers = poll.answers;
+              params.poll_user = poll.createdBy;
+              params.last = false;
+
+              res.send(params);
+            } else {
+              //last one!
+              res.send({last : true});            
+            }
+          }
+        }
+      );
     }
-  );
+  });
 
-});
+ });
 
 module.exports = router;

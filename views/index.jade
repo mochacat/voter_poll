@@ -12,9 +12,21 @@ block content
       p 
         button#pollVote.btn.btn-lg.btn-success.btn-block(type="submit") Submit
         button#nextPoll.btn.btn-lg.btn-success.btn-block(type="submit") Next
-    .create-poll
-      button#nextPoll.btn.btn-lg.btn-success(type="submit") Create Poll
-        input(type="text", name="answer1")
-        input(type="text", name="answer2")
-    #errors
-    
+        button#newPoll.btn.btn-lg.btn-success.btn-block(type="submit") 
+          span.glyphicon.glyphicon-pencil
+  <!-- Modal --->
+  #create.modal.fade(tabindex="-1", role="dialog" aria-labelledby="myModalLabel")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times;
+          h4.modal-title#myModalLabel Create your poll: Would you rather...
+        .modal-body
+          h5 Option 1:
+          input.form-control(type="text", name="answer1") 
+          h5 Option 2:
+          input.form-control(type="text", name="answer2") 
+        .modal-footer
+          button#createPoll.btn.btn-lg.btn-success(type="submit") Create
+  

@@ -26,7 +26,7 @@ footer{
 }
 
 .create-poll{
-  display: none;
+  /*display: none;*/
 }
 
 .list-group-item:hover{
@@ -35,10 +35,6 @@ footer{
 
 #overlay{
 
-}
-
-#nextPoll {
-  float: right;
 }
 
 #polo {
@@ -64,6 +60,10 @@ footer{
   margin-left: auto;
   margin-right: auto;
   z-index: -10;
+}
+
+#create{
+  display:none;
 }
 
 input[type="radio"]{
