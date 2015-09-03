@@ -11,11 +11,19 @@ router.post('/vote', function(req, res, next){
   var polls = db.get('pollcollection');
   
   //validation
-  req.checkBody('poll_id').len(24,24);
-
+  req.checkBody('poll_id', 'Invalid ID').len(24,24);
+  req.checkBody('vote', 'Invalid answer').len(10,140);
+  //limit fields
+  var too_many = 0;
+  var fields = ['vote', 'poll_id'];
+  for (var field in fields){
+   if (req.body.hasOwnProperty(field)){
+     too_many++;
+   }
+  }
   var errors = req.validationErrors();
 
-  if (errors){
+  if (errors || too_many > 0){
     res.send(errors);
   } else {
     //Allow one vote per ip
@@ -74,8 +82,18 @@ router.post('/create', function(req, res, next){
   req.checkBody('answer1', charMsg).len(10,140);
   req.checkBody('answer2', charMsg).len(10,140);
   
+  //limit fields
+  //TODO create limit fields function
+  var too_many = 0;
+  var fields = ['answer1', 'answer2'];
+  for (var field in fields){
+   if (req.body.hasOwnProperty(field)){
+     too_many++;
+   }
+  }
+
   var errors = req.validationErrors();
-  if (errors){
+  if (errors || req.body.too_many > 0){
     res.send({error: true, errors: errors});
   } else {
     //create new poll
@@ -113,7 +131,6 @@ router.post('/getPoll', function(req, res, next){
           sort : { creationDate : 1 } 
         },
         function(err,poll){
-          console.log(poll);
           if (err !== null){
             next(err);
           } else {
