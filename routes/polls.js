@@ -123,31 +123,36 @@ router.post('/getPoll', function(req, res, next){
   polls.findOne({ _id : ObjectId(req.body.id) },{},function(err,old_poll){
     if (err !== null){
     } else {
-      polls.findOne({
-          _id : { $ne : ObjectId(req.body.id) },
-          creationDate : { $gt : new Date(old_poll.creationDate) } 
-        }, 
-        { 
-          sort : { creationDate : 1 } 
-        },
-        function(err,poll){
-          if (err !== null){
-            next(err);
-          } else {
-            if (poll){  
-              params.poll_id = poll._id;
-              params.answers = poll.answers;
-              params.poll_user = poll.createdBy;
-              params.last = false;
-
-              res.send(params);
+      if (old_poll){
+      
+        polls.findOne({
+            _id : { $ne : ObjectId(req.body.id) },
+            creationDate : { $gt : new Date(old_poll.creationDate) } 
+          }, 
+          { 
+            sort : { creationDate : 1 } 
+          },
+          function(err,poll){
+            if (err !== null){
+              next(err);
             } else {
-              //last one!
-              res.send({last : true});            
+              if (poll){  
+                params.poll_id = poll._id;
+                params.answers = poll.answers;
+                params.poll_user = poll.createdBy;
+                params.last = false;
+
+                res.send(params);
+              } else {
+                //last one!
+                res.send({last : true});            
+              }
             }
           }
-        }
-      );
+         );
+      } else {
+        res.sendStatus(400);
+      }
     }
   });
 
