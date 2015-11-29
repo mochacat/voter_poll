@@ -48,9 +48,13 @@ $(document).ready(function() {
     
     //create new poll
     var newPoll = {
-      "answer1" : $('input[name=answer1]').val(), 
-      "answer2" : $('input[name=answer2]').val()
+      "answer1" : encodeHTML($('input[name=answer1]').val()), 
+      "answer2" : encodeHTML($('input[name=answer2]').val())
     } 
+
+    function encodeHTML(val){
+        return val.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
 
     $.ajax({
       type : 'POST',
